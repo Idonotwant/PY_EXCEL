@@ -1,0 +1,4 @@
+*.exe
+Lib/
+Scripts/
+/pyvenv.cfg
