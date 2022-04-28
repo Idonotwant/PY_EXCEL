@@ -11,14 +11,13 @@ python setting.py to make reference file
 python scatter.py to make scatter with log x axis(is usually used in frequence response)
 '''
 from openpyxl import load_workbook,drawing
-from os import system,sep
-from sys import exit
 from openpyxl.chart import (
     ScatterChart,
     Reference,
     Series,
     marker
 )
+from listBox import LListbox
 
 blue = drawing.colors.ColorChoice(prstClr='blue')
 
@@ -38,17 +37,23 @@ class scatter():
             self.mode = kwgs['mode']
         else:
             self.mode = 0
-        self.bookpass = self.get(self.mode)
-        self.read_plot()
+        self.bookpasses = self.get(self.mode)
+        self.bookpass = ""
+        if len(self.bookpasses):
+            for i in range(len(self.bookpasses)):
+                self.bookpass = self.bookpasses[i]
+                self.read_plot()
     def get(self,mode):
         if not mode:
             #input by typing
             bookpass = input('worbook poisition(absolute: ')
             #debug
             bookpass = bookpass[1:-1]
-            return bookpass
+            return [bookpass]
         else:#input by tkinter
-            pass
+            getter = LListbox()
+            getter.run()
+            return getter.filepaths
     def read_plot(self):
         wb = load_workbook(self.bookpass)
         ws = wb.active
@@ -101,5 +106,5 @@ class scatter():
 
 
 if __name__ == "__main__":
-    a = scatter()
+    a = scatter(mode=1)
 
